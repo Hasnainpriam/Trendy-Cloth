@@ -1,24 +1,39 @@
-import logo from './logo.svg';
+import { createContext, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Blog from './Blog/Blog';
+import Collection from './Collection/Collection';
+import Home from './Home/Home';
+import Dashboard from './Dashboard/Dashboard';
+import Error from './Error/Error';
+import Footer from './Footer/Footer';
+import Navbar from './Navbar/Navbar';
+import Review from './Review/Review';
+import Reviews from './Reviews/Reviews';
+
+export const ReviewContext = createContext();
+
 
 function App() {
+
+  const [reviews, setReviews] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ReviewContext.Provider value={[reviews, setReviews]}>
+      <Navbar></Navbar>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Collection" element={<Collection></Collection>} />
+        <Route path="/Blog" element={<Blog></Blog>} />
+        <Route path="/Dashboard" element={<Dashboard></Dashboard>} />
+        <Route path="/Reviews" element={<Reviews> </Reviews>} />
+        <Route path="/Review" element={<Review></Review>} />
+        <Route path="*" element={<Error></Error>} />
+      </Routes>
+
+      <Footer></Footer>
+
+    </ReviewContext.Provider>
   );
 }
 
